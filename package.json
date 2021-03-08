@@ -1,0 +1,26 @@
+{
+  "name": "chat-api-bot",
+  "version": "1.0.0",
+  "description": "Chat API with a bot",
+  "main": "bin/www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cotts/chat-api-bot.git"
+  },
+  "author": "Thadeu Cotts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cotts/chat-api-bot/issues"
+  },
+  "homepage": "https://github.com/cotts/chat-api-bot#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.19",
+    "socket.io": "^3.1.2"
+  }
+}
