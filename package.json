@@ -5,7 +5,9 @@
   "main": "bin/www",
   "scripts": {
     "start": "node -r esm bin/www",
-    "dev": "nodemon -r esm bin/www"
+    "dev": "nodemon -r esm bin/www",
+    "test": "jest *.spec.js",
+    "test:tdd": "npm run test --watch"
   },
   "repository": {
     "type": "git",
