@@ -15,3 +15,23 @@ function parserMessageList(list) {
 
   return parsedMessages
 }
+
+/**
+ *
+ * @param {string} roomId - room name / id
+ */
+export function getRoomMessages(roomId) {
+  try {
+    return Message.find({ roomId })
+      .populate({
+        path: 'sender',
+        select: 'name _id',
+      })
+      .lean()
+      .limit(50)
+      .sort({ createdAt: '1' })
+      .then(parserMessages)
+  } catch (error) {
+    throw new Error('Error on retrieve room messages')
+  }
+}
