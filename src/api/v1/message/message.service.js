@@ -1,8 +1,9 @@
 import Message from './message.model'
 
 /**
- *
+ * Format messages to return to chat view
  * @param {Array} list - Array of message objects
+ * @returns {Array}
  */
 function parserMessageList(list) {
   const parsedMessages = list.map((message) => {
@@ -17,8 +18,9 @@ function parserMessageList(list) {
 }
 
 /**
- *
+ * Get latest 50 messages from a specific room
  * @param {string} roomId - room name / id
+ * @returns {Array}
  */
 export function getRoomMessages(roomId) {
   try {
