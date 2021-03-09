@@ -6,7 +6,7 @@ dotenv.config()
 import { Server } from 'socket.io'
 
 const botList = ['/stock=']
-const roomsList = ['room1', 'room2', 'room3']
+const roomsList = ['watercooler', 'stockoptions', 'development']
 /**
  *  Intercept message to be sent to bot module
  * @param {SocketIO Instance} io socketIO Instance
@@ -65,17 +65,17 @@ function socketServer(server) {
     })
 
     // room1 store and send message to room
-    socket.on('room1', (message) => {
+    socket.on('watercooler', (message) => {
       storeAndSendMessage(io, 'room1', message)
     })
 
     // room2 store and send message to room
-    socket.on('room2', (message) => {
+    socket.on('stockoptions', (message) => {
       storeAndSendMessage(io, 'room2', message)
     })
 
     // room3 store and send message to room
-    socket.on('room3', (message) => {
+    socket.on('development', (message) => {
       storeAndSendMessage(io, 'room3', message)
     })
   })
