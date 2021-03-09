@@ -5,9 +5,13 @@ dotenv.config()
 
 import { Server } from 'socket.io'
 
-const io = new Server(server, {
-  cors: {
-    origin: process.env.URL,
-    methods: ['GET', 'POST'],
-  },
-})
+export default socketServer = (server) => {
+  const io = new Server(server, {
+    cors: {
+      origin: process.env.URL,
+      methods: ['GET', 'POST'],
+    },
+  })
+
+  io.on('connection', (socket) => {})
+}
