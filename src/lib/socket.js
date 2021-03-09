@@ -1,11 +1,16 @@
 import Message from '../api/v1/message/message.model'
-import * as bot from '../../bot'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
 import { Server } from 'socket.io'
 
+/**
+ *  Intercept message to be sent to bot module
+ * @param {SocketIO Instance} io socketIO Instance
+ * @param {Object} message
+ * @returns {Object / null}
+ */
 async function intercept(io, message) {
   if (message.message.startsWith('/stock=')) {
     io.to('botRoom').emit('runbot', message)
