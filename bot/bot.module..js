@@ -29,3 +29,14 @@ const createQueue = (channel, queue) =>
       reject(err)
     }
   })
+
+/**
+ * Send message to RabbitMQ Channel Queue
+ * @param {Channel Queue} queue
+ * @param {String} message
+ */
+const sendToQueue = (queue, message) =>
+  connect()
+    .then((channel) => createQueue(channel, queue))
+    .then((channel) => channel.sendToQueue(queue, Buffer.from(message)))
+    .catch(console.log)
