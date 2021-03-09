@@ -1,5 +1,11 @@
 import User from './user.model'
+import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
 
+dotenv.config()
+
+const passwordKey = process.env.PASSWORD_KEY
+const passSalts = 8
 /**
  * Check if username already exists
  * @param {String} username - username
@@ -16,10 +22,9 @@ async function userExists(username) {
  * @returns {Object}
  */
 export async function getUser(username, password) {
-  //TBD - Password Enctrypt
   try {
     const user = await User.findOne({ username })
-    if (!user || user.password !== password) {
+    if (!bcrypt.compareSync(password, user.password)) {
       throw new Error('Username or password is incorrect')
     }
     delete user.password
@@ -41,8 +46,11 @@ export async function createUser(name, username, password) {
     if (await userExists(username)) {
       throw new Error('User Already exists')
     }
-    return User.create({ name, username, password })
+    const hash = await bcrypt.hash(password, passSalts)
+
+    return User.create({ name, username, password: hash })
   } catch (error) {
+    console.log(error)
     throw new Error(error.message)
   }
 }
