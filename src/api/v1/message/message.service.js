@@ -32,8 +32,8 @@ export function getRoomMessages(roomId) {
       .lean()
       .limit(50)
       .sort({ createdAt: '1' })
-      .then(parserMessages)
+      .then(parserMessageList)
   } catch (error) {
-    throw new Error('Error on retrieve room messages')
+    throw new Error(error.message)
   }
 }
