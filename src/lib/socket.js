@@ -5,6 +5,11 @@ dotenv.config()
 
 import { Server } from 'socket.io'
 
+function storeAndSendMessage(io, room, message) {
+  Message.create(message).then(({ _doc }) =>
+    io.to(room).emit('message', { ..._doc, name: message.from })
+  )
+}
 /**
  *
  * @param {HttpServer} server - HTTP Server to connect websocket
@@ -26,23 +31,17 @@ function socketServer(server) {
 
     // room1 store and send message to room
     socket.on('room1', (message) => {
-      Message.create(message).then(({ _doc }) =>
-        io.to('room1').emit('message', { ..._doc, name: message.from })
-      )
+      storeAndSendMessage(io, 'room1', message)
     })
 
     // room2 store and send message to room
     socket.on('room2', (message) => {
-      Message.create(message).then(({ _doc }) =>
-        io.to('room2').emit('message', { ..._doc, name: message.from })
-      )
+      storeAndSendMessage(io, 'room2', message)
     })
 
     // room3 store and send message to room
     socket.on('room3', (message) => {
-      Message.create(message).then(({ _doc }) =>
-        io.to('room3').emit('message', { ..._doc, name: message.from })
-      )
+      storeAndSendMessage(io, 'room3', message)
     })
   })
 }
