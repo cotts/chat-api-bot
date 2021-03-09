@@ -5,7 +5,11 @@ dotenv.config()
 
 import { Server } from 'socket.io'
 
-export default socketServer = (server) => {
+/**
+ *
+ * @param {HttpServer} server - HTTP Server to connect websocket
+ */
+function socketServer(server) {
   const io = new Server(server, {
     cors: {
       origin: process.env.URL,
@@ -13,5 +17,11 @@ export default socketServer = (server) => {
     },
   })
 
-  io.on('connection', (socket) => {})
+  io.on('connection', (socket) => {
+    // Add socket user to room
+    socket.on('join', (arg, callback) => {
+      socket.join(arg)
+      callback(arg)
+    })
+  })
 }
