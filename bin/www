@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-import app from '../src';
-import { Server } from 'http';
-import dotenv from 'dotenv';
+import { Server } from 'http'
+import dotenv from 'dotenv'
+import app from '../src'
+import * as database from '../src/lib/database'
 
-dotenv.config();
+dotenv.config()
 
-const httpServer = Server(app);
+const httpServer = Server(app)
 
 httpServer.listen(process.env.PORT, () => {
-  console.info(`Server running on port ${process.env.PORT}`);
-});
+  console.info(`Server running on port ${process.env.PORT}`)
+  database.connect()
+})
