@@ -7,6 +7,5 @@ export default function verifyToken(req, res, next) {
     req.headers.authorization === process.env.APIKEY
   )
     next()
-
-  res.status(401).send('Server Unauthorized')
+  else res.status(401).send('Server Unauthorized')
 }
