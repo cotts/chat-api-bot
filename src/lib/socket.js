@@ -50,12 +50,7 @@ function storeAndSendMessage(io, room, message) {
  */
 function socketServer(server) {
   //TBD - Add Socket auth
-  const io = new Server(server, {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST'],
-    },
-  })
+  const io = new Server(server)
 
   io.on('connection', (socket) => {
     // Add socket user to room
