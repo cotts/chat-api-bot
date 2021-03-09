@@ -79,8 +79,8 @@ function socketServer(server) {
       storeAndSendMessage(io, 'room3', message)
     })
 
-    socket.on('ping', (message, callback) => {
-      callback(`ping-${message}`)
+    socket.on('ping', (callback) => {
+      callback('pong')
     })
   })
 }
