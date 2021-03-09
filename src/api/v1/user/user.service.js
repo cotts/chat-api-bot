@@ -28,3 +28,21 @@ export async function getUser(username, password) {
     throw new Error(error.message)
   }
 }
+
+/**
+ * Create user if username doesn't exist
+ * @param {String} name - user name
+ * @param {String} username - user login name
+ * @param {String} password - user password
+ * @returns {Object}
+ */
+export async function createUser(name, username, password) {
+  try {
+    if (await userExists(username)) {
+      throw new Error('User Already exists')
+    }
+    return User.create({ name, username, password })
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
