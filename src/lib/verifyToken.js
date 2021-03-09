@@ -3,8 +3,8 @@ dotenv.config()
 
 export default function verifyToken(req, res, next) {
   if (
-    req.header.authorization &&
-    req.header.authorization === process.env.APIKEY
+    req.headers.authorization &&
+    req.headers.authorization === process.env.APIKEY
   )
     next()
 
