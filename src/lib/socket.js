@@ -52,3 +52,5 @@ function socketServer(server) {
     })
   })
 }
+
+export default socketServer
