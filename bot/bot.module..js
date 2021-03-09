@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const connectionString = process.env.RABBITMQ_SERVER
-const queue = process.env.RABBITMQ_QUEUE
+const connectionQueue = process.env.RABBITMQ_QUEUE
 
 /**
  * Connect to RABBITMQ Server
@@ -51,3 +51,16 @@ const consume = (queue, callback) =>
     .then((channel) => createQueue(channel, queue))
     .then((channel) => channel.consume(queue, callback, { noAck: true }))
     .catch(console.log)
+
+/**
+ *  consume the socketIO instance and send message from queue
+ * @param {SocketIO} ioInstance
+ */
+const startConsumer = (ioInstance) => {
+  consume(connectionQueue, (message) => {
+    const parsedMessage = JSON.parse(message.content.toString())
+    ioInstance.to(parsedMessage.roomId).emit('message', parsedMessage)
+  })
+}
+
+export { startConsumer }
