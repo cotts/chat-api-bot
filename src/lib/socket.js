@@ -52,7 +52,7 @@ function socketServer(server) {
   //TBD - Add Socket auth
   const io = new Server(server, {
     cors: {
-      origin: process.env.URL,
+      origin: '*',
       methods: ['GET', 'POST'],
     },
   })
