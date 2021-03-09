@@ -5,6 +5,8 @@ dotenv.config()
 
 import { Server } from 'socket.io'
 
+const botList = ['/stock=']
+const roomsList = ['room1', 'room2', 'room3']
 /**
  *  Intercept message to be sent to bot module
  * @param {SocketIO Instance} io socketIO Instance
@@ -12,11 +14,15 @@ import { Server } from 'socket.io'
  * @returns {Object / null}
  */
 async function intercept(io, message) {
-  if (message.message.startsWith('/stock=')) {
-    io.to('botRoom').emit('runbot', message)
+  const botName = botList.find((bot) => message.message.startsWith(bot))
+
+  if (botName) {
+    console.log('bot')
+    io.to(botName).emit('run', message)
     return
   }
-  if (message._id) {
+  if (message.bot) {
+    console.log('from bot')
     io.to(message.roomId).emit('message', message)
     return
   }
@@ -58,7 +64,10 @@ function socketServer(server) {
       callback(arg)
     })
 
-    socket.on('request', () => socket.join('botRoom'))
+    socket.on('requestRoom', (arg, callback) => {
+      socket.join(arg)
+      callback(arg)
+    })
 
     // room1 store and send message to room
     socket.on('room1', (message) => {
