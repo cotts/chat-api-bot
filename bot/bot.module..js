@@ -31,7 +31,7 @@ const createQueue = (channel, queue) =>
   })
 
 /**
- * Send message to RabbitMQ Channel Queue
+ * Producer - Send message to RabbitMQ Channel Queue
  * @param {Channel Queue} queue
  * @param {String} message
  */
@@ -39,4 +39,15 @@ const sendToQueue = (queue, message) =>
   connect()
     .then((channel) => createQueue(channel, queue))
     .then((channel) => channel.sendToQueue(queue, Buffer.from(message)))
+    .catch(console.log)
+
+/**
+ * Consumer - read messages from Channel Queue
+ * @param {Channel Queue} queue
+ * @param {Callback} callback
+ */
+const consume = (queue, callback) =>
+  connect()
+    .then((channel) => createQueue(channel, queue))
+    .then((channel) => channel.consume(queue, callback, { noAck: true }))
     .catch(console.log)
