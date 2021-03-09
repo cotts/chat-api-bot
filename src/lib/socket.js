@@ -5,11 +5,18 @@ dotenv.config()
 
 import { Server } from 'socket.io'
 
+/**
+ * Store and send message to a specific room
+ * @param {SocketIO} io - SocketIO instance
+ * @param {String} room - Room name
+ * @param {Object} message message to be stored and sent
+ */
 function storeAndSendMessage(io, room, message) {
   Message.create(message).then(({ _doc }) =>
     io.to(room).emit('message', { ..._doc, name: message.from })
   )
 }
+
 /**
  *
  * @param {HttpServer} server - HTTP Server to connect websocket
