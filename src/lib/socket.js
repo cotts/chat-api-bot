@@ -1,9 +1,22 @@
 import Message from '../api/v1/message/message.model'
+import * as bot from '../../bot'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
 import { Server } from 'socket.io'
+
+async function intercept(io, message) {
+  if (message.message.startsWith('/stock=')) {
+    io.to('botRoom').emit('runbot', message)
+    return
+  }
+  if (message._id) {
+    io.to(message.roomId).emit('message', message)
+    return
+  }
+  return message
+}
 
 /**
  * Store and send message to a specific room
@@ -12,9 +25,12 @@ import { Server } from 'socket.io'
  * @param {Object} message message to be stored and sent
  */
 function storeAndSendMessage(io, room, message) {
-  Message.create(message).then(({ _doc }) =>
-    io.to(room).emit('message', { ..._doc, name: message.from })
-  )
+  intercept(io, message).then((data) => {
+    if (data)
+      Message.create(message).then(({ _doc }) =>
+        io.to(room).emit('message', { ..._doc, name: message.from })
+      )
+  })
 }
 
 /**
@@ -36,6 +52,8 @@ function socketServer(server) {
       socket.join(arg)
       callback(arg)
     })
+
+    socket.on('request', () => socket.join('botRoom'))
 
     // room1 store and send message to room
     socket.on('room1', (message) => {
