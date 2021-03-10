@@ -7,6 +7,7 @@ import { Server } from 'socket.io'
 
 const botList = ['/stock=']
 const roomsList = ['watercooler', 'stockoptions', 'development']
+
 /**
  *  Intercept message to be sent to bot module
  * @param {SocketIO Instance} io socketIO Instance
@@ -17,12 +18,10 @@ async function intercept(io, message) {
   const botName = botList.find((bot) => message.message.startsWith(bot))
 
   if (botName) {
-    console.log('bot')
     io.to(botName).emit('run', message)
     return
   }
   if (message.bot) {
-    console.log('from bot')
     io.to(message.roomId).emit('message', message)
     return
   }
@@ -59,26 +58,33 @@ function socketServer(server) {
       callback(arg)
     })
 
+    //BOT Room request
     socket.on('requestRoom', (arg, callback) => {
       socket.join(arg)
       callback(arg)
     })
 
-    // room1 store and send message to room
+    //Request available Rooms
+    socket.on('listRooms', (callback) => {
+      callback(roomsList)
+    })
+
+    // watercooler room store and send message to room
     socket.on('watercooler', (message) => {
-      storeAndSendMessage(io, 'room1', message)
+      storeAndSendMessage(io, 'watercooler', message)
     })
 
-    // room2 store and send message to room
+    // stockoptions room store and send message to room
     socket.on('stockoptions', (message) => {
-      storeAndSendMessage(io, 'room2', message)
+      storeAndSendMessage(io, 'stockoptions', message)
     })
 
-    // room3 store and send message to room
+    // development room store and send message to room
     socket.on('development', (message) => {
-      storeAndSendMessage(io, 'room3', message)
+      storeAndSendMessage(io, 'development', message)
     })
 
+    //PING-PONG Emit
     socket.on('ping', (callback) => {
       callback('pong')
     })
