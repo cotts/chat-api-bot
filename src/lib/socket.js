@@ -74,19 +74,14 @@ function socketServer(server) {
       callback(roomsList)
     })
 
-    // watercooler room store and send message to room
-    socket.on('watercooler', (message) => {
-      storeAndSendMessage(io, 'watercooler', message)
+    //bot response
+    socket.on('botEmit', (roomId, message) => {
+      io.to(roomId).emit('message', message)
     })
 
-    // stockoptions room store and send message to room
-    socket.on('stockoptions', (message) => {
-      storeAndSendMessage(io, 'stockoptions', message)
-    })
-
-    // development room store and send message to room
-    socket.on('development', (message) => {
-      storeAndSendMessage(io, 'development', message)
+    //rom send message
+    socket.on('sendMessage', (roomId, message) => {
+      storeAndSendMessage(io, roomId, message)
     })
 
     //PING-PONG Emit
