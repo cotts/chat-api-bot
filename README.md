@@ -73,9 +73,9 @@ yarn dev
 > 3.2 - In Production Mode
 
 ```bash
-npm run dev
+npm start
 #or
-yarn dev
+yarn start
 ```
 
 <br/>
