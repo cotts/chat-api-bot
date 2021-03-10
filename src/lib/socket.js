@@ -71,7 +71,6 @@ function socketServer(server) {
 
     //Request available Rooms
     socket.on('listRooms', (callback) => {
-      console.log('list')
       callback(roomsList)
     })
 
