@@ -48,16 +48,16 @@ yarn
 2- Set environment keys
 
 ```bash
-PORT=         #Server Port:Default 5000
-DB_HOST=      #Database Host (mongoDB)
-DB_USER=      #Database user
-DB_PASS=      #Database password
-DB_NAME=      #Database name
-APIKEY=       #Authorization APIKEY
-PASSWORD_KEY= #Password Encryption Key
-CORS_LIST=    #Socket CORS sites authorized
-ROOMS_LIST=   #Socket Rooms List
-BOT_LIST=     #Authorized Bot List
+PORT=         # Server Port:Default 5000
+DB_HOST=      # Database Host (mongoDB)
+DB_USER=      # Database user
+DB_PASS=      # Database password
+DB_NAME=      # Database name
+APIKEY=       # Authorization APIKEY
+PASSWORD_KEY= # Password Encryption Key
+CORS_LIST=    # Socket CORS sites authorized
+ROOMS_LIST=   # Socket Rooms List
+BOT_LIST=     # Authorized Bot List
 ```
 
 3 - Run Service
