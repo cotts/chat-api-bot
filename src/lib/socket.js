@@ -1,12 +1,12 @@
 import Message from '../api/v1/message/message.model'
 import dotenv from 'dotenv'
+import { Server } from 'socket.io'
 
 dotenv.config()
 
-import { Server } from 'socket.io'
-
-const botList = ['/stock=']
-const roomsList = ['watercooler', 'stockoptions', 'development']
+const botList = process.env.BOT_LIST.split(',')
+const roomsList = process.env.ROOMS_LIST.split(',')
+const corsList = process.env.CORS_LIST.split(',')
 
 /**
  *  Intercept message to be sent to bot module
@@ -49,7 +49,12 @@ function storeAndSendMessage(io, room, message) {
  */
 function socketServer(server) {
   //TBD - Add Socket auth
-  const io = new Server(server)
+  const io = new Server(server, {
+    cors: {
+      origins: [corsList],
+      methods: ['GET', 'POST'],
+    },
+  })
 
   io.on('connection', (socket) => {
     // Add socket user to room
@@ -66,6 +71,7 @@ function socketServer(server) {
 
     //Request available Rooms
     socket.on('listRooms', (callback) => {
+      console.log('list')
       callback(roomsList)
     })
 
