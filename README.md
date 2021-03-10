@@ -35,7 +35,54 @@ This API services use the bot list below:
 <hr/>
 <br/>
 
+## How to run
+
+1- Install dependencies
+
+```bash
+npm i
+##or
+yarn
+```
+
+2- Set environment keys
+
+```bash
+PORT=         #Server Port:Default 5000
+DB_HOST=      #Database Host (mongoDB)
+DB_USER=      #Database user
+DB_PASS=      #Database password
+DB_NAME=      #Database name
+APIKEY=       #Authorization APIKEY
+PASSWORD_KEY= #Password Encryption Key
+CORS_LIST=    #Socket CORS sites authorized
+ROOMS_LIST=   #Socket Rooms List
+BOT_LIST=     #Authorized Bot List
+```
+
+3 - Run Service
+
+> 3.1 - In Development Mode
+
+```bash
+npm run dev
+#or
+yarn dev
+```
+
+> 3.2 - In Production Mode
+
+```bash
+npm run dev
+#or
+yarn dev
+```
+
+<br/>
+<hr/>
+
 ## TBD
 
 - Unit Tests
-- Increase token validation (set up logged user and validate)
+- Increase token validation
+- Set up socket Token
